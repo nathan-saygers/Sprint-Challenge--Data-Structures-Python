@@ -47,34 +47,37 @@ class LinkedList:
 
     def reverse_list(self, node, prev):
         # You must use recursion for this solution
-        if node == None:
-            return None
-
-        print(node.value, '->', prev.value)
-        # If there is a node.next_node
-        if node.next_node != None:
-            # Call function again with current node as previous
+        # If previous is not none:
+        if node != None:
+            if node.next_node == None:
+                self.head = node
+                node.next_node = prev
+                return
+            # call function again with curr and next as node and prev
             self.reverse_list(node.next_node, node)
-            # Set node.next node to previous
-            node.next_node = prev
-            # Set current node to head
-            self.head = node
-
-        # If there is no prev node
-        if prev == None:
-            # set node.next node to None
-            node.next_node = None
-            return
-
-
+            # set Node.next to be previous
+            if prev != None:
+                node.next_node = prev
+            else:
+                node.next_node = None
+        
+        #Things that need to happen:
+            # 1 points to 2 points to 3 etc
+            # old next links are severed
+            # head is transferred to 1
 
 # For example,
 # ```
-# 1 <- 2 -> 3 -> None
-# ```
+# 5 <- 4 -> 3 -> 2 <-> 1 -> None
+#                N
+#          P
+# H
+
+
+
 # would become...
 # ```
-# 3->2->1->None
+# 3 <- 2 <- 1 <- None
 # ```
 
 tester = LinkedList()
@@ -82,6 +85,4 @@ tester = LinkedList()
 tester.add_to_head(1)
 tester.add_to_head(2)
 tester.add_to_head(3)
-tester.add_to_head(4)
-tester.add_to_head(5)
 tester.reverse_list(tester.head, None)
